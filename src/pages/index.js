@@ -1,28 +1,55 @@
 import Head from 'next/head'
 import styles from "../styles/Index.module.css"
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
 export default function Index() {
   useEffect(() => {
-    document.addEventListener("click", (e) => {
+    var counter = 0;
+    document.getElementsByClassName(styles.svgApp)[0].addEventListener("click", (e) => {
       var elements = document.elementsFromPoint(e.clientX, e.clientY);
+      var element = document.elementFromPoint(e.clientX, e.clientY);
+
+      if (element.tagName == "path") {
+        counter++;
+        document.getElementsByClassName(styles.counter)[0].innerHTML = "Nombre de points placés : " + counter;
+      }
 
       for (var i = 0; i < elements.length; i++) {
         if (elements[i].tagName == "path") {
-          elements[i].style.opacity = "0.2";
+          if (elements[i].className.baseVal != styles.Mirror) {
+            elements[i].style.opacity = "0.2";
+
+            var img = document.createElement("img");
+            img.src = "/user.png";
+            img.style.position = "absolute";
+            img.style.top = e.clientY + "px";
+            img.style.left = e.clientX + "px";
+            img.style.width = "30px";
+            img.style.height = "30px";
+            img.style.transform = "translate(-50%, -50%)";
+            img.style.zIndex = "10000"
+            img.classList.add("user");
+            document.body.appendChild(img);
+
+
+          }
         }
       }
 
-      var img = document.createElement("img");
-      img.src = "/user.png";
-      img.style.position = "absolute";
-      img.style.top = e.clientY + "px";
-      img.style.left = e.clientX + "px";
-      img.style.width = "25px";
-      img.style.height = "25px";
-      img.style.transform = "translate(-50%, -50%)";
-      img.style.zIndex = "10000"
-      document.body.appendChild(img);
+    })
+    document.getElementsByClassName(styles.restart)[0].addEventListener("click", () => {
+      var paths = document.getElementsByTagName("path");
+      for (var i = 0; i < paths.length; i++) {
+        paths[i].style.opacity = "1";
+      }
+      var users = document.getElementsByClassName("user");
+      for (var i = 0; i < users.length; i++) {
+        users[i].remove();
+      }
+      var restart = document.getElementsByClassName(styles.restart)[0];
+      restart.click();
+      counter = 0;
+      document.getElementsByClassName(styles.counter)[0].innerHTML = "Nombre de points placés : " + counter;
     })
   }, [])
   return (
@@ -33,6 +60,8 @@ export default function Index() {
         <link rel="icon" type="image/png" href="favicon.png" />
       </Head>
       <div className={styles.svgApp_container}>
+        <h1 className={styles.counter}>Nombre de points placés : 0</h1>
+        <button className={styles.restart}>Recommencer</button>
         <svg className={styles.svgApp} viewBox="0 0 1998 818" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M198.611 456.986L423.524 19L823.849 798.579L1224.17 19L1624.5 798.579L1799.91 456.986" stroke="#EF233C" className={styles.ray_1} stroke-width="15" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M198.611 456.986L486.615 19L999.262 798.579L1511.91 19L1799.91 456.986" stroke="#FFC800" className={styles.ray_2} stroke-width="15" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
@@ -51,8 +80,8 @@ export default function Index() {
           <path d="M204.68 456.986C204.68 460.177 202.105 462.753 198.913 462.753C195.722 462.753 193.146 460.177 193.146 456.986C193.146 453.795 195.722 451.22 198.913 451.22C202.105 451.22 204.68 453.795 204.68 456.986Z" stroke="white" stroke-width="30" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M1805.68 456.986C1805.68 460.177 1803.1 462.753 1799.91 462.753C1796.72 462.753 1794.15 460.177 1794.15 456.986C1794.15 453.795 1796.72 451.22 1799.91 451.22C1803.1 451.22 1805.68 453.795 1805.68 456.986Z" fill="white" />
           <path d="M1805.68 456.986C1805.68 460.177 1803.1 462.753 1799.91 462.753C1796.72 462.753 1794.15 460.177 1794.15 456.986C1794.15 453.795 1796.72 451.22 1799.91 451.22C1803.1 451.22 1805.68 453.795 1805.68 456.986Z" stroke="white" stroke-width="30" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M0 810.5H1997.5" stroke="white" stroke-width="14" />
-          <path d="M0 7H1997.5" stroke="white" stroke-width="14" />
+          <path d="M0 810.5H1997.5" stroke="white" stroke-width="14" className={styles.Mirror} />
+          <path d="M0 7H1997.5" stroke="white" stroke-width="14" className={styles.Mirror} />
 
 
         </svg>
