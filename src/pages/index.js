@@ -4,50 +4,15 @@ import { useEffect, useRef } from 'react'
 
 export default function Index() {
   useEffect(() => {
-
-    document.getElementsByClassName(styles.ray_1)[0].addEventListener("click", () => {
-      document.getElementsByClassName(styles.ray_1)[0].style.opacity = "0.3"
-      document.getElementsByClassName(styles.ray_1)[0].style.zIndex = "-100"
-    })
-    document.getElementsByClassName(styles.ray_2)[0].addEventListener("click", () => {
-      document.getElementsByClassName(styles.ray_2)[0].style.opacity = "0.3"
-      document.getElementsByClassName(styles.ray_2)[0].style.zIndex = "-100"
-      
-    })
-    document.getElementsByClassName(styles.ray_3)[0].addEventListener("click", () => {
-      document.getElementsByClassName(styles.ray_3)[0].style.opacity = "0.3"
-      document.getElementsByClassName(styles.ray_3)[0].style.zIndex = "-100"
-    })
-    document.getElementsByClassName(styles.ray_4)[0].addEventListener("click", () => {
-      document.getElementsByClassName(styles.ray_4)[0].style.opacity = "0.3"
-      document.getElementsByClassName(styles.ray_4)[0].style.zIndex = "-100"
-    })
-    document.getElementsByClassName(styles.ray_5)[0].addEventListener("click", () => {
-      document.getElementsByClassName(styles.ray_5)[0].style.opacity = "0.3"
-      document.getElementsByClassName(styles.ray_5)[0].style.zIndex = "-100"
-    })
-    document.getElementsByClassName(styles.ray_6)[0].addEventListener("click", () => {
-      document.getElementsByClassName(styles.ray_6)[0].style.opacity = "0.3"
-      document.getElementsByClassName(styles.ray_6)[0].style.zIndex = "-100"
-    })
-    document.getElementsByClassName(styles.ray_7)[0].addEventListener("click", () => {
-      document.getElementsByClassName(styles.ray_7)[0].style.opacity = "0.3"
-      document.getElementsByClassName(styles.ray_7)[0].style.zIndex = "-100"
-    })
-    document.getElementsByClassName(styles.ray_8)[0].addEventListener("click", () => {
-      document.getElementsByClassName(styles.ray_8)[0].style.opacity = "0.3"
-      document.getElementsByClassName(styles.ray_8)[0].style.zIndex = "-100"
-    })
-    document.getElementsByClassName(styles.ray_9)[0].addEventListener("click", () => {
-      document.getElementsByClassName(styles.ray_9)[0].style.opacity = "0.3"
-      document.getElementsByClassName(styles.ray_9)[0].style.zIndex = "-100"
-    })
-    document.getElementsByClassName(styles.ray_10)[0].addEventListener("click", () => {
-      document.getElementsByClassName(styles.ray_10)[0].style.opacity = "0.3"
-      document.getElementsByClassName(styles.ray_10)[0].style.zIndex = "-100"
-    })
-
     document.addEventListener("click", (e) => {
+      var elements = document.elementsFromPoint(e.clientX, e.clientY);
+
+      for (var i = 0; i < elements.length; i++) {
+        if (elements[i].tagName == "path") {
+          elements[i].style.opacity = "0.2";
+        }
+      }
+
       var img = document.createElement("img");
       img.src = "/user.png";
       img.style.position = "absolute";
